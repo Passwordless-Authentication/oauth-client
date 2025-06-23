@@ -1,3 +1,28 @@
 spring:
   application:
     name: oauth-client
+  security:
+    oauth2:
+      client:
+        registration:
+          authenticator-app:
+            client-id: ${OAUTH_CLIENT_ID:authenticator-app}
+            client-secret: ${OAUTH_CLIENT_SECRET}
+            authorization-grant-type: ${OAUTH_CLIENT_AUTHORIZATION_GRANT_TYPE:authorization_code}
+            redirect-uri: ${OAUTH_CLIENT_REDIRECT_URI:passwordless://oauth2/redirect}
+            scope:
+              - openid
+              - profile
+        provider:
+          authenticator-app:
+            authorization-uri: ${sso.base-url}/realms/${sso.realm}/protocol/openid-connect/auth
+            issuer-uri: ${sso.base-url}/realms/${sso.realm}
+            token-uri: ${sso.base-url}/realms/${sso.realm}/protocol/openid-connect/token
+            user-name-attribute: preferred_username
+            user-info-uri: ${sso.base-url}/realms/${sso.realm}/protocol/openid-connect/userinfo
+sso:
+  base-url: ${SSO_BASE_URL:http://localhost:8080}
+  realm: ${SSO_REALM:iliya.dev}
+  verify-url: ${SSO_VERIFY_URL:${sso.base-url}/realms/${sso.realm}/passwordless/auth/verify}
+  challenge-query-parameter: ${SSO_VERIFY_CHALLENGE_QUERY_PARAMETER:response}
+  reload-ws-url: ws://${server.address:localhost:${server.port}}/passwordless
