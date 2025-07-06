@@ -5,16 +5,15 @@ spring:
     oauth2:
       client:
         registration:
-          authenticator-app:
+          authenticator:
             client-id: ${OAUTH_CLIENT_ID:authenticator-app}
             client-secret: ${OAUTH_CLIENT_SECRET}
             authorization-grant-type: ${OAUTH_CLIENT_AUTHORIZATION_GRANT_TYPE:authorization_code}
-            redirect-uri: ${OAUTH_CLIENT_REDIRECT_URI:passwordless://oauth2/redirect}
             scope:
               - openid
               - profile
         provider:
-          authenticator-app:
+          authenticator:
             authorization-uri: ${sso.base-url}/realms/${sso.realm}/protocol/openid-connect/auth
             issuer-uri: ${sso.base-url}/realms/${sso.realm}
             token-uri: ${sso.base-url}/realms/${sso.realm}/protocol/openid-connect/token
@@ -26,3 +25,5 @@ sso:
   verify-url: ${SSO_VERIFY_URL:${sso.base-url}/realms/${sso.realm}/passwordless/auth/verify}
   challenge-query-parameter: ${SSO_VERIFY_CHALLENGE_QUERY_PARAMETER:response}
   reload-ws-url: ws://${server.address:localhost:${server.port}}/passwordless
+app:
+  redirectUri: ${APP_REDIRECT_URI:passwordless://app.${sso.realm}}
