@@ -17,6 +17,8 @@ class InMemoryTokenService : TokenService {
     }
 
     override fun load(id: UUID): Tokens? {
-        return registry[id]
+        val tokens = registry[id]
+        tokens?.run { registry.remove(id) }
+        return tokens
     }
 }
