@@ -11,7 +11,8 @@ spring:
             authorization-grant-type: ${OAUTH_CLIENT_AUTHORIZATION_GRANT_TYPE:authorization_code}
             scope:
               - openid
-              - profile
+              - authenticator
+              - offline_access
         provider:
           authenticator:
             authorization-uri: ${sso.base-url}/realms/${sso.realm}/protocol/openid-connect/auth
