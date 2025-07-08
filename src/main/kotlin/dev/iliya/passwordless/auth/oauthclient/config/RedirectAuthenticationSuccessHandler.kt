@@ -11,7 +11,6 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler
 import org.springframework.web.util.UriComponentsBuilder
-import java.time.Duration
 
 class RedirectAuthenticationSuccessHandler(
     private val clientService: OAuth2AuthorizedClientService,
@@ -38,7 +37,7 @@ class RedirectAuthenticationSuccessHandler(
             idToken = idToken.tokenValue,
             accessToken = accessToken.tokenValue,
             refreshToken = refreshToken.tokenValue,
-            expiresIn = Duration.between(accessToken.expiresAt, accessToken.issuedAt).toMillis()
+            expiresAt = accessToken.expiresAt!!.toEpochMilli()
         )
         val id = tokenService.store(tokens)
 

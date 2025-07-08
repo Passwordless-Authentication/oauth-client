@@ -35,6 +35,7 @@ class SecurityConfiguration(
         httpSecurity {
             authorizeHttpRequests {
                 authorize("/", permitAll)
+                authorize("/token/code/**", permitAll)
                 authorize(anyRequest, authenticated)
             }
             csrf { disable() }
