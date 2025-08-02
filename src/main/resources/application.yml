@@ -28,3 +28,5 @@ sso:
   reload-ws-url: ws://${server.address:localhost:${server.port}}/passwordless
 app:
   redirectUri: ${APP_REDIRECT_URI:passwordless://app.${sso.realm}}
+server:
+  port: 9090
