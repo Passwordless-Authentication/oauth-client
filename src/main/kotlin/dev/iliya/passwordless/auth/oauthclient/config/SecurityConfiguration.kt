@@ -36,6 +36,7 @@ class SecurityConfiguration(
         httpSecurity {
             authorizeHttpRequests {
                 authorize("/", permitAll)
+                authorize("passwordless/notification/**", permitAll)
                 authorize("/token/code/**", permitAll)
                 authorize(anyRequest, authenticated)
             }
